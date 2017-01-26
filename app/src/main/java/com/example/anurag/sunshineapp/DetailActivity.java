@@ -20,12 +20,20 @@ public class DetailActivity extends AppCompatActivity {
     private static final int COL_WEATHER_MIN_TEMP = 4;
     static String mForecastStr;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_detail);
         if (savedInstanceState == null) {
-            getSupportFragmentManager().beginTransaction().add(R.id.weather_detail_container, new DetailFragment()).commit();
+
+            Bundle args = new Bundle();
+            args.putParcelable(DetailFragment.DETAIL_URI,getIntent().getData());
+            DetailFragment detailFragment = new DetailFragment();
+            detailFragment.setArguments(args);
+            getSupportFragmentManager().beginTransaction().add(R.id.weather_detail_container, detailFragment,DetailFragment.DETAIL_FRAG_TAG)
+                    .commit();
+
 
         }
 

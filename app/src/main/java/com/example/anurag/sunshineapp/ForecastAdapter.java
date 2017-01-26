@@ -18,10 +18,15 @@ public class ForecastAdapter extends CursorAdapter {
     private static final int VIEW_TYPE_FUTURE_DAY = 1;
     private static final int VIEW_TYPE_COUNT = 2;
     Context mContext;
+    private boolean mUseTodayLayout = true;
 
     public ForecastAdapter(Context context, Cursor c, int flags) {
         super(context, c, flags);
         mContext = context;
+    }
+
+    public void setUseTodayLayout(boolean useTodayLayout) {
+        mUseTodayLayout = useTodayLayout;
     }
 
     /**
@@ -58,7 +63,7 @@ public class ForecastAdapter extends CursorAdapter {
 
     @Override
     public int getItemViewType(int position) {
-        return position == 0 ? VIEW_TYPE_TODAY : VIEW_TYPE_FUTURE_DAY;
+        return (position == 0 && mUseTodayLayout) ? VIEW_TYPE_TODAY : VIEW_TYPE_FUTURE_DAY;
     }
 
     /*
@@ -104,6 +109,7 @@ public class ForecastAdapter extends CursorAdapter {
         // Find TextView and set weather forecast on it
 
         viewHolder.descriptionView.setText(description);
+        viewHolder.iconView.setContentDescription(description);
 
         // TODO Read weather forecast from cursor
 
