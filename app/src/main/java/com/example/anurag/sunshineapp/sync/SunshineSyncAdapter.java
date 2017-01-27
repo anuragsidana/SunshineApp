@@ -308,7 +308,7 @@ public class SunshineSyncAdapter extends AbstractThreadedSyncAdapter {
             final String UNITS_PARAM = "units";
             final String DAYS_PARAM = "cnt";
             final String APP_ID = "APPID";
-            final String id = "cae4bfba0e416f79c673c4ae52ae71bb";
+            final String id = "";
 
             Log.d("anug", "location is "+locationQuery);
             Uri builtUri = Uri.parse(FORECAST_BASE_URL).buildUpon()
@@ -331,7 +331,12 @@ public class SunshineSyncAdapter extends AbstractThreadedSyncAdapter {
                 Log.d("anug","inside 200");
 
                 // Read the input stream into a String
-                InputStream inputStream = urlConnection.getInputStream();
+            InputStream inputStream;
+           try{      inputStream = urlConnection.getInputStream();
+           }catch (IOException e){
+               setLocationStatus(getContext(),LOCATION_STATUS_INVALID);
+               return;
+           }
                 StringBuffer buffer = new StringBuffer();
                 if (inputStream == null) {
                     // Nothing to do.
